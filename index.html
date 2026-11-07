@@ -1,0 +1,437 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>StudySpace</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+<div class="app-container">
+
+    <!-- SIDEBAR -->
+    <aside class="sidebar">
+        <h2>StudySpace ✨</h2>
+
+        <nav>
+            <a href="#" class="active" data-page="dashboard">🏠 Dashboard</a>
+            <a href="#" data-page="subjects">📚 My Subjects</a>
+            <a href="#" data-page="notes">📝 Notes</a>
+            <a href="#" data-page="sounds">🎧 Music</a>
+            <a href="#" data-page="timer">⏱️ Focus Timer</a>
+        </nav>
+    </aside>
+
+    <!-- MAIN CONTENT -->
+    <main class="main-content">
+
+        <!-- DASHBOARD PAGE -->
+        <section class="page active-page" id="dashboard">
+
+            <h1>Welcome back! 💜</h1>
+            <p>Let's make today productive.</p>
+
+            <div class="dashboard-grid">
+
+                <div class="left-column">
+
+                    <!-- TO-DO -->
+                    <div class="todo-box">
+                        <h2>My Tasks ✨</h2>
+
+                        <div class="task-input">
+                            <input type="text" id="taskInput"
+                                placeholder="What do you need to do?">
+                            <button onclick="addTask()">Add Task</button>
+                        </div>
+
+                        <ul id="taskList"></ul>
+                    </div>
+
+                    <!-- TEST OVERVIEW -->
+                    <div class="test-card">
+                        <h2>Upcoming Test 📚</h2>
+
+                        <input id="testName" type="text"
+                            placeholder="Test name (e.g. WTM-16)">
+
+                        <input id="testDate" type="date">
+
+                        <input id="testSubjects" type="text"
+                            placeholder="Subjects (Physics, Chemistry, Math)">
+
+                        <input id="completedChapters" type="number"
+                            placeholder="Completed chapters">
+
+                        <input id="pendingChapters" type="number"
+                            placeholder="Pending chapters">
+
+                        <button onclick="saveTest()">Save Test</button>
+
+                        <div id="testDisplay"></div>
+                    </div>
+
+                </div>
+
+                <!-- CALENDAR -->
+                <div class="calendar-box">
+
+                    <div class="calendar-heading">
+                        <h2>My Calendar 📅</h2>
+
+                        <div class="calendar-controls">
+                            <button onclick="changeMonth(-1)">❮</button>
+                            <button onclick="goToday()">Today</button>
+                            <button onclick="changeMonth(1)">❯</button>
+                        </div>
+                    </div>
+
+                    <h3 id="monthTitle"></h3>
+
+                    <div class="calendar-grid" id="calendarGrid">
+                        <div class="weekday">Mon</div>
+                        <div class="weekday">Tue</div>
+                        <div class="weekday">Wed</div>
+                        <div class="weekday">Thu</div>
+                        <div class="weekday">Fri</div>
+                        <div class="weekday">Sat</div>
+                        <div class="weekday">Sun</div>
+                    </div>
+
+                    <p class="calendar-hint">
+                        💡 Click any date to add an event.
+                    </p>
+
+                </div>
+
+            </div>
+        </section>
+
+
+        <!-- SUBJECTS PAGE -->
+        <section class="page" id="subjects">
+
+            <h1>My Subjects ✨</h1>
+
+            <p class="section-subtitle">
+                Organise your learning, one chapter at a time.
+            </p>
+
+            <div class="subjects-grid">
+
+                <div class="subject-card physics-card">
+                    <div class="subject-icon">⚛️</div>
+                    <h2>Physics</h2>
+                    <p>Understand the universe.</p>
+
+                    <div class="subject-progress">
+                        <div id="physicsProgress"></div>
+                    </div>
+
+                    <p id="physicsCount">0 chapters completed</p>
+
+                    <button onclick="openSubject('physics')">
+                        View Chapters →
+                    </button>
+                </div>
+
+                <div class="subject-card chemistry-card">
+                    <div class="subject-icon">🧪</div>
+                    <h2>Chemistry</h2>
+                    <p>Explore the world of molecules.</p>
+
+                    <div class="subject-progress">
+                        <div id="chemistryProgress"></div>
+                    </div>
+
+                    <p id="chemistryCount">0 chapters completed</p>
+
+                    <button onclick="openSubject('chemistry')">
+                        View Chapters →
+                    </button>
+                </div>
+
+                <div class="subject-card math-card">
+                    <div class="subject-icon">📐</div>
+                    <h2>Mathematics</h2>
+                    <p>Make every problem count.</p>
+
+                    <div class="subject-progress">
+                        <div id="mathProgress"></div>
+                    </div>
+
+                    <p id="mathCount">0 chapters completed</p>
+
+                    <button onclick="openSubject('math')">
+                        View Chapters →
+                    </button>
+                </div>
+
+            </div>
+
+            <div id="chapterArea"></div>
+
+        </section>
+
+
+        <!-- NOTES PAGE -->
+        <section class="page" id="notes">
+
+            <h1>My Notes 📝</h1>
+
+            <p class="section-subtitle">
+                Your thoughts, formulas and revision notes, all in one place.
+            </p>
+
+            <div class="notes-layout">
+
+                <div class="notes-sidebar">
+                    <h2>Subject Folders</h2>
+
+                    <button class="folder-button active"
+                        onclick="selectNoteFolder('physics', this)">
+                        ⚛️ Physics
+                    </button>
+
+                    <button class="folder-button"
+                        onclick="selectNoteFolder('chemistry', this)">
+                        🧪 Chemistry
+                    </button>
+
+                    <button class="folder-button"
+                        onclick="selectNoteFolder('math', this)">
+                        📐 Mathematics
+                    </button>
+                </div>
+
+                <div class="notes-main">
+
+                    <div class="notes-list-area">
+                        <h2 id="notesFolderTitle">Physics Notes</h2>
+
+                        <input type="text" id="noteSearch"
+                            placeholder="Search your notes...">
+
+                        <div id="notesList"></div>
+
+                        <button onclick="createNewNote()">
+                            + New Note
+                        </button>
+                    </div>
+
+                    <div class="note-editor">
+
+                        <input type="text" id="noteTitle"
+                            placeholder="Untitled Note">
+
+                        <div class="editor-toolbar">
+                            <button type="button" onclick="formatNote('bold')">
+                                <b>B</b>
+                            </button>
+
+                            <button type="button" onclick="formatNote('italic')">
+                                <i>I</i>
+                            </button>
+
+                            <button type="button" onclick="formatNote('underline')">
+                                <u>U</u>
+                            </button>
+
+                            <button type="button"
+                                onclick="formatNote('insertUnorderedList')">
+                                • List
+                            </button>
+
+                            <button type="button"
+                                onclick="formatNote('insertOrderedList')">
+                                1. List
+                            </button>
+
+                            <button type="button"
+                                onclick="formatNote('formatBlock', 'H2')">
+                                Heading
+                            </button>
+
+                            <button type="button"
+                                onclick="formatNote('removeFormat')">
+                                Clear
+                            </button>
+                        </div>
+
+                        <div id="noteContent"
+                            class="note-content"
+                            contenteditable="true"
+                            data-placeholder="Start writing your notes...">
+                        </div>
+
+                        <div class="note-actions">
+                            <button onclick="saveNote()">Save Note</button>
+                            <button onclick="deleteNote()">Delete Note</button>
+                        </div>
+
+                        <p id="noteStatus"></p>
+
+                    </div>
+                </div>
+            </div>
+        </section>
+
+
+        <!-- SOUND STUDIO PAGE -->
+
+<section class="page" id="sounds">
+
+    <h1>Sound Studio 🎧</h1>
+    <p class="section-subtitle">
+        Build your perfect study atmosphere.
+    </p>
+
+    <div class="sound-grid">
+
+        <div class="sound-card">
+            <div class="sound-icon">🌧️</div>
+            <h2>Rain</h2>
+            <p>Soft rainfall ambience</p>
+            <button onclick="toggleSound('rain')" id="rainButton">
+                ▶ Play
+            </button>
+            <input type="range" min="0" max="100" value="40"
+                oninput="setSoundVolume('rain', this.value)">
+        </div>
+
+        <div class="sound-card">
+            <div class="sound-icon">☕</div>
+            <h2>Café</h2>
+            <p>Gentle café background noise</p>
+            <button onclick="toggleSound('cafe')" id="cafeButton">
+                ▶ Play
+            </button>
+            <input type="range" min="0" max="100" value="35"
+                oninput="setSoundVolume('cafe', this.value)">
+        </div>
+
+        <div class="sound-card">
+            <div class="sound-icon">🌿</div>
+            <h2>Forest</h2>
+            <p>Calm nature ambience</p>
+            <button onclick="toggleSound('forest')" id="forestButton">
+                ▶ Play
+            </button>
+            <input type="range" min="0" max="100" value="35"
+                oninput="setSoundVolume('forest', this.value)">
+        </div>
+
+        <div class="sound-card">
+            <div class="sound-icon">📚</div>
+            <h2>Library</h2>
+            <p>Quiet background atmosphere</p>
+            <button onclick="toggleSound('library')" id="libraryButton">
+                ▶ Play
+            </button>
+            <input type="range" min="0" max="100" value="25"
+                oninput="setSoundVolume('library', this.value)">
+        </div>
+
+    </div>
+
+    <button class="stop-all-button" onclick="stopAllSounds()">
+        ■ Stop All Sounds
+    </button>
+
+</section>
+
+
+<!-- FOCUS TIMER PAGE -->
+
+<section class="page" id="timer">
+
+    <h1>Focus Timer ⏱️</h1>
+    <p class="section-subtitle">
+        One session at a time. One goal at a time.
+    </p>
+
+    <div class="timer-card">
+
+        <div class="timer-modes">
+            <button onclick="setFocusMode(25, 5)" id="pomodoroMode"
+                class="selected-mode">
+                Pomodoro · 25/5
+            </button>
+
+            <button onclick="setFocusMode(50, 10)" id="longMode">
+                Deep Focus · 50/10
+            </button>
+        </div>
+
+        <p id="timerLabel">FOCUS SESSION</p>
+
+        <div id="timerDisplay">25:00</div>
+
+        <div class="timer-controls">
+            <button onclick="startFocusTimer()" id="timerStart">
+                ▶ Start
+            </button>
+
+            <button onclick="pauseFocusTimer()">
+                ⏸ Pause
+            </button>
+
+            <button onclick="resetFocusTimer()">
+                ↺ Reset
+            </button>
+        </div>
+
+        <div class="custom-timer">
+            <h3>Custom Focus Duration</h3>
+
+            <input type="number" id="customMinutes"
+                min="1" max="180" placeholder="Minutes">
+
+            <button onclick="setCustomTimer()">
+                Set Timer
+            </button>
+        </div>
+
+        <div class="session-counter">
+            <span>Completed focus sessions</span>
+            <h2 id="sessionCount">0</h2>
+        </div>
+
+    </div>
+
+</section>
+
+    </main>
+</div>
+
+<script src="script.js"></script>
+
+<!-- PAGE NAVIGATION -->
+<script>
+    const navigationLinks = document.querySelectorAll("[data-page]");
+    const pages = document.querySelectorAll(".page");
+
+    navigationLinks.forEach(link => {
+        link.addEventListener("click", function(event) {
+            event.preventDefault();
+
+            const pageName = this.dataset.page;
+
+            pages.forEach(page => {
+                page.classList.remove("active-page");
+            });
+
+            document.getElementById(pageName).classList.add("active-page");
+
+            navigationLinks.forEach(nav => {
+                nav.classList.remove("active");
+            });
+
+            this.classList.add("active");
+        });
+    });
+</script>
+
+</body>
+</html>
